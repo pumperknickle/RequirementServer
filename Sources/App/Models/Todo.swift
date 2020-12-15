@@ -1,5 +1,6 @@
 import Fluent
 import Vapor
+import RQTFoundation
 
 final class Todo: Model, Content {
     static let schema = "todos"
