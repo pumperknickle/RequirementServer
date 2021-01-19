@@ -12,7 +12,7 @@ final class TagModel: Model, Content {
     var target: RequirementVersionModel
     
     @OptionalField(key: "span")
-    var span: Double?
+    var span: String?
     
     @Field(key: "attribute")
     var attribute: String
@@ -29,7 +29,7 @@ final class TagModel: Model, Content {
         self.id = id
         self.$target.id = target
         if let span = span {
-            self.span = Double(span)
+            self.span = String(span)
         }
         self.attribute = attribute
         self.value = value
@@ -44,7 +44,7 @@ final class TagModel: Model, Content {
         guard let targetuuid = UUID(uuidString: dto.target.description) else { return nil }
         self.$target.id = targetuuid
         if let span = dto.span, let combined = UInt64(a: span.0, b: span.1) {
-            self.span = Double(combined)
+            self.span = String(combined)
         }
         self.value = dto.value
         self.attribute = dto.attribute
@@ -52,6 +52,6 @@ final class TagModel: Model, Content {
     }
     
     func convertToDTO<T: Tag>() -> T {
-        return T(id: T.ID(id!.uuidString)!, target: T.ID(self.$target.id.uuidString)!, span: self.span != nil ? UInt64(self.span!).parts : nil, attribute: attribute, value: value, createdAt: createdAt)
+        return T(id: T.ID(id!.uuidString)!, target: T.ID(self.$target.id.uuidString)!, span: self.span != nil ? UInt64(self.span!)?.parts : nil, attribute: attribute, value: value, createdAt: createdAt)
     }
 }

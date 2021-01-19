@@ -17,6 +17,8 @@ public func configure(_ app: Application) throws {
 
     app.migrations.add(CreateRequirementVersion())
     app.migrations.add(CreateTagModel())
+    
+    try app.autoMigrate().wait()
 
     // register routes
     try routes(app)

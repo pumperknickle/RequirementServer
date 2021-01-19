@@ -5,7 +5,7 @@ struct CreateTagModel: Migration {
         return database.schema("tags")
             .id()
             .field("target_id", .uuid, .required, .references("requirementversions", "id"))
-            .field("span", .double)
+            .field("span", .string)
             .field("attribute", .string, .required)
             .field("value", .string)
             .field("created_at", .string)

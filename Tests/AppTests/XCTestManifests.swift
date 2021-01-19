@@ -6,6 +6,7 @@ extension AppTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__AppTests = [
+        ("testCRUDforRequirementTag", testCRUDforRequirementTag),
         ("testCRUDforRequirementVersions", testCRUDforRequirementVersions),
         ("testHelloWorld", testHelloWorld),
     ]
