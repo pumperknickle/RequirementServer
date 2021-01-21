@@ -67,11 +67,11 @@ final class APIDocsController: RouteCollection {
         #endif
 
         let info = OpenAPI.Document.Info(
-            title: "Vapor OpenAPI Example API",
+            title: "Requirements Server API",
             description:
             ###"""
-            ## Descriptive Text
-            This text supports _markdown_!
+            ## Requirements Server
+            The requirements server exists to hold all versions of requirements and all related tags throughout the Requirements Clarification Process (RCP). This will be used as a source of training data for fine-tuning custom language models and training sequence tagging models for a variety of tasks including ambiguity detection, term sense disambiguation, etc. Provides a flexible and well documented backend model for tagging and managing requirements.
             """###,
             version: "1.0"
         )

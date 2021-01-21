@@ -11,8 +11,11 @@ final class TagModel: Model, Content {
     @Parent(key: "target_id")
     var target: RequirementVersionModel
     
-    @OptionalField(key: "span")
-    var span: String?
+    @OptionalField(key: "left")
+    var left: Int?
+    
+    @OptionalField(key: "right")
+    var right: Int?
     
     @Field(key: "attribute")
     var attribute: String
@@ -25,12 +28,11 @@ final class TagModel: Model, Content {
     
     init() { }
     
-    init(id: UUID?, target: UUID, span: UInt64?, attribute: String, value: String?, createdAt: Date?) {
+    init(id: UUID?, target: UUID, span: (Int, Int)?, attribute: String, value: String?, createdAt: Date?) {
         self.id = id
         self.$target.id = target
-        if let span = span {
-            self.span = String(span)
-        }
+        self.left = span?.0
+        self.right = span?.1
         self.attribute = attribute
         self.value = value
         self.createdAt = createdAt
@@ -43,15 +45,17 @@ final class TagModel: Model, Content {
         }
         guard let targetuuid = UUID(uuidString: dto.target.description) else { return nil }
         self.$target.id = targetuuid
-        if let span = dto.span, let combined = UInt64(a: span.0, b: span.1) {
-            self.span = String(combined)
-        }
+        self.left = dto.left
+        self.right = dto.right
         self.value = dto.value
         self.attribute = dto.attribute
         self.createdAt = dto.createdAt
     }
     
     func convertToDTO<T: Tag>() -> T {
-        return T(id: T.ID(id!.uuidString)!, target: T.ID(self.$target.id.uuidString)!, span: self.span != nil ? UInt64(self.span!)?.parts : nil, attribute: attribute, value: value, createdAt: createdAt)
+        if let left = self.left, let right = self.right {
+            return T(id: T.ID(id!.uuidString)!, target: T.ID(self.$target.id.uuidString)!, span: (left, right), attribute: attribute, value: value, createdAt: createdAt)
+        }
+        return T(id: T.ID(id!.uuidString)!, target: T.ID(self.$target.id.uuidString)!, span: nil, attribute: attribute, value: value, createdAt: createdAt)
     }
 }

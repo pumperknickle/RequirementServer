@@ -13,7 +13,7 @@ struct TagController: RouteCollection {
             .tags("Tag")
         reqTags.post(use: create)
             .summary("Create tags")
-            .description("Creates a new taag")
+            .description("Creates a new tag")
             .tags("Tag")
         reqTags.group(":id") { tag in
             tag.delete(use: delete)
