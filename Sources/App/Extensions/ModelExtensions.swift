@@ -22,8 +22,8 @@ extension RequirementVersionImpl: Sampleable {
 
 extension RequirementTagImpl: Sampleable {
     public static var samples: [Self] {
-        let sample1 = RequirementTagImpl(id: UUID().description, target: UUID().description, span: (10, 21), attribute: "Amibiguous Term", value: nil, createdAt: Date())
-        let sample2 = RequirementTagImpl(id: UUID().description, target: UUID().description, span: nil, attribute: "Passive Voice", value: nil, createdAt: Date())
+        let sample1 = RequirementTagImpl(id: UUID().description, target: UUID().description, span: (10, 21), attribute: "Ambiguity", value: "Undefined Term", createdAt: Date())
+        let sample2 = RequirementTagImpl(id: UUID().description, target: UUID().description, span: nil, attribute: "Ambiguity", value: "Passive Voice", createdAt: Date())
         return [sample1, sample2]
     }
     

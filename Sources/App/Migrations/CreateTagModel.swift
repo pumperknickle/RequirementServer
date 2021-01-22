@@ -8,7 +8,7 @@ struct CreateTagModel: Migration {
             .field("left", .int)
             .field("right", .int)
             .field("attribute", .string, .required)
-            .field("value", .string)
+            .field("value", .string, .required)
             .field("created_at", .string)
             .create()
     }

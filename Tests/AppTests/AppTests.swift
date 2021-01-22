@@ -43,7 +43,7 @@ final class AppTests: XCTestCase {
             let reqVersion = try res.content.decode(RequirementVersionImpl.self)
             XCTAssertNotNil(reqVersion.id)
             XCTAssertNotNil(reqVersion.createdAt)
-            let requirementTagModel = RequirementTagImpl(id: nil, target: reqVersion.id!, span: nil, attribute: "Passive", value: nil, createdAt: nil)
+            let requirementTagModel = RequirementTagImpl(id: nil, target: reqVersion.id!, span: nil, attribute: "Ambiguity", value: "Passive Voice", createdAt: nil)
             try app.test(.POST, "tags", beforeRequest: { req in
                 try req.content.encode(requirementTagModel)
             }, afterResponse: { res in

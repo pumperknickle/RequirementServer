@@ -14,7 +14,7 @@ let package = Package(
         .package(url: "https://github.com/mattpolzin/OpenAPIReflection.git", from: "1.0.0"),
         .package(url: "https://github.com/vapor/fluent.git", from: "4.0.0"),
         .package(url: "https://github.com/vapor/fluent-postgres-driver.git", from: "2.0.0"),
-        .package(url: "https://github.com/pumperknickle/RQTFoundation.git", from: "0.0.8"),
+        .package(url: "https://github.com/pumperknickle/RQTFoundation.git", from: "0.0.9"),
     ],
     targets: [
         .target(

@@ -20,15 +20,15 @@ final class TagModel: Model, Content {
     @Field(key: "attribute")
     var attribute: String
     
-    @OptionalField(key: "value")
-    var value: String?
+    @Field(key: "value")
+    var value: String
     
     @Timestamp(key: "created_at", on: .create)
     var createdAt: Date?
     
     init() { }
     
-    init(id: UUID?, target: UUID, span: (Int, Int)?, attribute: String, value: String?, createdAt: Date?) {
+    init(id: UUID?, target: UUID, span: (Int, Int)?, attribute: String, value: String, createdAt: Date?) {
         self.id = id
         self.$target.id = target
         self.left = span?.0
