@@ -5,6 +5,7 @@ let package = Package(
     name: "RequirementServer",
     platforms: [
        .macOS(.v10_15)
+        
     ],
     dependencies: [
         // 💧 A server-side Swift web framework.

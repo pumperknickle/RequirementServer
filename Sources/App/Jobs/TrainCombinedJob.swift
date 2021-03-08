@@ -9,6 +9,7 @@ struct TrainCombinedJob: ScheduledJob {
     RequirementVersionModel.query(on: context.application.db).all().mapEach { $0.convertToDTO() }.flatMap { (reqs: [RequirementVersionImpl]) -> EventLoopFuture<Void> in
         TagModel.query(on: context.application.db).all().mapEach { $0.convertToDTO() }.flatMap { (tags: [RequirementTagImpl]) -> EventLoopFuture<Void> in
             do {
+                if tags.isEmpty || reqs.isEmpty || tags.count < 100 || reqs.count < 100 { return context.eventLoop.future() }
                 try reqs.computeEmbedding(queueContext: context, pathToExistingLM: pathToLM, pathToTrainedLM: pathToLM)
                 return try reqs.computeAllModels(queueContext: context, tags: tags, pathsToLMs: [pathToLM], testSplit: 0.1, devSplit: 0.1)
             }
