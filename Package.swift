@@ -14,7 +14,9 @@ let package = Package(
         .package(url: "https://github.com/mattpolzin/OpenAPIReflection.git", from: "1.0.0"),
         .package(url: "https://github.com/vapor/fluent.git", from: "4.0.0"),
         .package(url: "https://github.com/vapor/fluent-postgres-driver.git", from: "2.0.0"),
-        .package(url: "https://github.com/pumperknickle/RQTFoundation.git", from: "0.0.9"),
+        .package(url: "https://github.com/pumperknickle/RQTFoundation.git", from: "0.1.1"),
+        .package(url: "https://github.com/pvieito/PythonKit.git", .branch("master")),
+        .package(url: "https://github.com/vapor/queues-redis-driver.git", from: "1.0.0"),
     ],
     targets: [
         .target(
@@ -27,6 +29,8 @@ let package = Package(
                 .product(name: "VaporOpenAPI", package: "VaporOpenAPI"),
                 .product(name: "OpenAPIReflection", package: "OpenAPIReflection"),
                 .product(name: "Yams", package: "Yams"),
+                .product(name: "PythonKit", package: "PythonKit"),
+                .product(name: "QueuesRedisDriver", package: "queues-redis-driver"),
             ],
             swiftSettings: [
                 // Enable better optimizations when building in Release configuration. Despite the use of

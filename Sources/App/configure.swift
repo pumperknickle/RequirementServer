@@ -1,6 +1,8 @@
 import Fluent
 import FluentPostgresDriver
 import Vapor
+import Queues
+import QueuesRedisDriver
 
 // configures your application
 public func configure(_ app: Application) throws {
@@ -19,6 +21,14 @@ public func configure(_ app: Application) throws {
     app.migrations.add(CreateTagModel())
     
     try app.autoMigrate().wait()
+    
+    try app.queues.use(.redis(url: "redis://scheduler:6379"))
+    let lmJob = TrainLMJob()
+    app.queues.schedule(lmJob).hourly().at(10)
+    let inferenceJob = TrainInferenceJob()
+    app.queues.schedule(inferenceJob).hourly().at(10)
+    try app.queues.startScheduledJobs()
+    
 
     // register routes
     try routes(app)

@@ -9,6 +9,8 @@ extension RequirementVersionImpl: Content { }
 
 extension RequirementTagImpl: Content { }
 
+extension PredictedTagImpl: Content { }
+
 extension RequirementVersionImpl: Sampleable {
     public static var samples: [Self] {
         let sample1 = RequirementVersionImpl(id: UUID().description, text: "The FLIGHT_INFORMATION_SYSTEM shall display the TRACKING_INFORMATION for relevant aircraft", source: nil, createdAt: Date())
@@ -30,6 +32,16 @@ extension RequirementTagImpl: Sampleable {
     public static var sample: Self { return samples.randomElement()! }
 }
 
+extension PredictedTagImpl: Sampleable {
+    public static var samples: [Self] {
+        let sample1 = PredictedTagImpl(id: UUID().description, target: UUID().description, span: (10, 21), attribute: "Ambiguity", value: "Undefined Term", createdAt: Date(), confidence: 0.1)
+        let sample2 = PredictedTagImpl(id: UUID().description, target: UUID().description, span: nil, attribute: "Ambiguity", value: "Passive Voice", createdAt: Date(), confidence: 0.2)
+        return [sample1, sample2]
+    }
+    
+    public static var sample: Self { return samples.randomElement()! }
+}
+
 extension RequirementVersionImpl: OpenAPIEncodedSchemaType {
     public static func openAPISchema(using encoder: JSONEncoder) throws -> JSONSchema {
         return try genericOpenAPISchemaGuess(using: encoder)
@@ -37,6 +49,12 @@ extension RequirementVersionImpl: OpenAPIEncodedSchemaType {
 }
 
 extension RequirementTagImpl: OpenAPIEncodedSchemaType {
+    public static func openAPISchema(using encoder: JSONEncoder) throws -> JSONSchema {
+        return try genericOpenAPISchemaGuess(using: encoder)
+    }
+}
+
+extension PredictedTagImpl: OpenAPIEncodedSchemaType {
     public static func openAPISchema(using encoder: JSONEncoder) throws -> JSONSchema {
         return try genericOpenAPISchemaGuess(using: encoder)
     }
@@ -53,6 +71,16 @@ extension RequirementVersionImpl: ResponseEncodable {
 }
 
 extension RequirementTagImpl: ResponseEncodable {
+    public func encodeResponse(for request: Request) -> EventLoopFuture<Response> {
+        return request.eventLoop
+            .makeSucceededFuture(())
+            .flatMapThrowing {
+                try Response(body: .init(data: JSONEncoder().encode(self)))
+        }
+    }
+}
+
+extension PredictedTagImpl: ResponseEncodable {
     public func encodeResponse(for request: Request) -> EventLoopFuture<Response> {
         return request.eventLoop
             .makeSucceededFuture(())
