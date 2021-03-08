@@ -23,12 +23,9 @@ public func configure(_ app: Application) throws {
     try app.autoMigrate().wait()
     
     try app.queues.use(.redis(url: "redis://scheduler:6379"))
-    let lmJob = TrainLMJob()
-    app.queues.schedule(lmJob).hourly().at(10)
-    let inferenceJob = TrainInferenceJob()
-    app.queues.schedule(inferenceJob).hourly().at(10)
+    let combindJob = TrainCombinedJob()
+    app.queues.schedule(combindJob).hourly().at(10)
     try app.queues.startScheduledJobs()
-    
 
     // register routes
     try routes(app)

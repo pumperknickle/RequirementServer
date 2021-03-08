@@ -6,4 +6,5 @@ func routes(_ app: Application) throws {
     try app.register(collection: apiDocsController)
     try app.register(collection: RequirementVersionController())
     try app.register(collection: TagController())
+    try app.register(collection: InferenceController())
 }

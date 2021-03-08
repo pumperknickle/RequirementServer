@@ -7,6 +7,7 @@ import NIO
 
 let sentenceEndMarks = Set<Character>([".", "!", "?"])
 let embeddingCorpusPath = "embeddingcorpi/"
+let pathToInferenceModels = "resources/taggers/"
 var defaultDetectionAttributes = ["adverb"]
 
 public extension String {
@@ -219,7 +220,7 @@ public extension String {
 }
 
 public struct Trainer {
-    static func infer(for requirements: [RequirementVersionImpl], for attributes: [String]? = nil, pathToTrainedModel: String = "resources/taggers/") -> [PredictedTagImpl] {
+    static func infer(for requirements: [RequirementVersionImpl], for attributes: [String]? = nil, pathToTrainedModel: String = pathToInferenceModels) -> [PredictedTagImpl] {
         let os = Python.import("os")
         let dataModule = Python.import("flair.data")
         let modelsModule = Python.import("flair.models")
@@ -251,7 +252,7 @@ public struct Trainer {
         .reduce([], +)
     }
     
-    static func computeLabellingModel(for type: String, corpus: PythonObject, pathToTrainedModel: String = "resources/taggers/", pathsToLMs: [String], epochs: Int = 150) {
+    static func computeLabellingModel(for type: String, corpus: PythonObject, pathToTrainedModel: String = pathToInferenceModels, pathsToLMs: [String], epochs: Int = 150) {
         let os = Python.import("os")
         let embeddingsModule = Python.import("flair.embeddings")
         let modelsModule = Python.import("flair.models")
