@@ -222,6 +222,7 @@ public extension String {
 public struct Trainer {
     static func infer(for requirements: [RequirementVersionImpl], for attributes: [String]? = nil, pathToTrainedModel: String = pathToInferenceModels) -> [PredictedTagImpl] {
         let os = Python.import("os")
+        PythonLibrary.useVersion(3)
         let dataModule = Python.import("flair.data")
         let modelsModule = Python.import("flair.models")
         let children = os.scandir(pathToTrainedModel.addSlashIfNeeded())
@@ -254,6 +255,7 @@ public struct Trainer {
     
     static func computeLabellingModel(for type: String, corpus: PythonObject, pathToTrainedModel: String = pathToInferenceModels, pathsToLMs: [String], epochs: Int = 150) {
         let os = Python.import("os")
+        PythonLibrary.useVersion(3)
         let embeddingsModule = Python.import("flair.embeddings")
         let modelsModule = Python.import("flair.models")
         let trainerModule = Python.import("flair.trainers")
@@ -271,6 +273,7 @@ public struct Trainer {
     // Fine tune embedding at pathToExistingLM or create new Embedding if pathToExistingLM is nil, using pathToCorpus for training data, and storing the resulting embedding at pathToTrainedLM
     static func computeEmbedding(pathToExistingLM: String?, pathToCorpus: String, pathToTrainedLM: String, is_forward: Bool = true, max_epochs: Int = 10) throws {
         let os = Python.import("os")
+        PythonLibrary.useVersion(3)
         let flair = Python.import("flair")
         let lang_trainer = Python.import("flair.trainers.language_model_trainer")
         let existingPath: PythonObject = (pathToExistingLM != nil && (Bool(os.path.exists(pathToExistingLM!.addSlashIfNeeded() + "best-lm.pt")) ?? false)) ? PythonObject(pathToExistingLM!.addSlashIfNeeded() + "best-lm.pt") : Python.None
